@@ -1,8 +1,9 @@
 <ion-content fullscreen class="welcome-page">
+
   <div class="overlay">
 
-    <div class="intro-text">
-      <p class="pretitle">Portal del Estudiante</p>
+    <div class="logo-bottom">
+      <img src="assets/images/LogoColegio.jpeg" alt="Logo IE" />
     </div>
 
     <div class="title">
@@ -10,22 +11,17 @@
       <p class="subtitle">¡Juntos construimos el futuro!</p>
     </div>
 
-    <div class="logo-bottom">
-      <img src="../../assets/icon/logo.jpeg" alt="Logo IE" />
-    </div>
-
-    <div class="motto">
-      <p>📘 Educar es sembrar futuro</p>
-    </div>
-
     <div class="buttons">
-      <ion-button class="btn-iniciar" expand="block" routerLink="/intro">
+      <!-- PADRE -->
+      <ion-button class="btn-iniciar" expand="block" (click)="irALogin('padre')">
         <ion-icon name="school-outline"></ion-icon>
-        &nbsp;Iniciar Sesión
+        &nbsp;INICIAR SESIÓN / PADRE
       </ion-button>
-      <ion-button class="btn-registrar" expand="block" routerLink="/crear-cuenta">
-        <ion-icon name="book-outline"></ion-icon>
-        &nbsp;Registrarse
+
+      <!-- DIRECTOR -->
+      <ion-button class="btn-registrar" expand="block" (click)="irALogin('director')">
+        <ion-icon name="briefcase-outline"></ion-icon>
+        &nbsp;INICIAR SESIÓN / DIRECTOR
       </ion-button>
     </div>
 

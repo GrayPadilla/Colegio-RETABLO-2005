@@ -1,53 +1,99 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title class="ion-text-center">📝 Nuevo Reporte</ion-title>
+  <ion-toolbar class="header-toolbar">
+    <!-- back -->
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- centro con logo + nombre -->
+    <div class="header-center">
+      <img src="../../assets/images/aea-pica.png" alt="Logo" class="logo" />
+      <span>Institución Educativa 2005 Retablo</span>
+    </div>
+
+    <!-- campanita -->
+    <ion-buttons slot="end">
+      <ion-button class="notif-btn" (click)="goNotificaciones()">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding fondo-reporte">
-  <ion-card class="form-reporte">
-    <ion-card-header>
-      <ion-card-title>Información del Reporte</ion-card-title>
-    </ion-card-header>
 
-    <ion-card-content>
-      <ion-list lines="none">
+<ion-content fullscreen>
+  <!-- fondo institucional -->
+  <div class="background-image" aria-hidden="true"></div>
 
-        <ion-item>
-          <ion-label position="stacked">Tipo de Reporte <ion-text color="danger">*</ion-text></ion-label>
-          <ion-select [(ngModel)]="tipoReporte" placeholder="Selecciona tipo">
-            <ion-select-option value="asistencia">Asistencia</ion-select-option>
-            <ion-select-option value="actividad">Actividad</ion-select-option>
-          </ion-select>
-        </ion-item>
+  <!-- sheet -->
+  <div class="sheet-wrapper">
+    <div class="white-sheet" aria-hidden="true"></div>
 
-        <ion-item>
-          <ion-label position="stacked">Grado y Sección <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input [(ngModel)]="gradoSeccion" placeholder="Ej. 2do B"></ion-input>
-        </ion-item>
+    <div class="content-inner">
+      <h2 class="section-title">Registrar nuevo informe</h2>
 
-        <ion-item>
-          <ion-label position="stacked">Fecha del Reporte <ion-text color="danger">*</ion-text></ion-label>
-          <ion-datetime
-            [(ngModel)]="fecha"
-            presentation="date"
-            placeholder="Selecciona fecha">
-          </ion-datetime>
-        </ion-item>
+      <form (ngSubmit)="guardarReporte()" class="form-reporte">
 
-        <ion-item>
-          <ion-label position="stacked">Descripción</ion-label>
-          <ion-textarea
-            [(ngModel)]="descripcion"
-            placeholder="Escribe observaciones o detalles...">
-          </ion-textarea>
-        </ion-item>
+        <!-- Tipo -->
+        <div class="field-row">
+          <div class="field-label-pill">Tipo</div>
+          <div class="field-input">
+            <ion-select [(ngModel)]="tipoReporte" name="tipoReporte" interface="popover" placeholder="Selecciona tipo">
+              <ion-select-option value="asistencia">Asistencia</ion-select-option>
+              <ion-select-option value="actividad">Actividad</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
 
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+        <!-- Grado -->
+        <div class="field-row">
+          <div class="field-label-pill">Grado</div>
+          <div class="field-input">
+            <ion-input [(ngModel)]="gradoSeccion" name="gradoSeccion" placeholder="Ej. 2do B"></ion-input>
+          </div>
+        </div>
 
-  <ion-button expand="block" color="success" class="guardar-btn" (click)="guardarReporte()">
-    💾 Guardar Reporte
-  </ion-button>
+        <!-- Fecha -->
+        <div class="field-row">
+          <div class="field-label-pill">Fecha</div>
+          <div class="field-input">
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="fecha"
+              name="fecha"
+              preferWheel="false">
+            </ion-datetime>
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="field-row">
+          <div class="field-label-pill">Detalle</div>
+          <div class="field-input">
+            <ion-textarea
+              rows="3"
+              [(ngModel)]="descripcion"
+              name="descripcion"
+              placeholder="Observaciones...">
+            </ion-textarea>
+          </div>
+        </div>
+
+        <!-- Acción -->
+        <div class="actions">
+          <button type="submit" class="create-btn">
+            Guardar reporte
+            <ion-icon name="save-outline"></ion-icon>
+          </button>
+        </div>
+      </form>
+
+      <!-- Banner -->
+      <div class="ad-wrapper">
+        <img src="../../assets/images/ImagenRestablecerContrasena.png" alt="Publicidad" />
+      </div>
+    </div>
+  </div>
 </ion-content>

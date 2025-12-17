@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- LOGO + TEXTO (alineados a la izquierda junto a la flecha) -->
+    <div class="header-left">
+      <img src="../../assets/images/aea-pica.png" class="logo" alt="Logo" />
+      <span class="school-name">Institución Educativa 2005 Retablo</span>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="notif-btn" (click)="goNotificaciones()" aria-label="Notificaciones">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- fondo (igual patrón que otras pantallas) -->
+<div class="background-image" aria-hidden="true"></div>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="sheet-wrapper">
+    <div class="white-sheet" aria-hidden="true"></div>
+
+    <div class="content-inner">
+      <!-- Navegación de Mes (compacta, sobre la imagen) -->
+      <div class="month-nav ion-text-center">
+        <ion-button fill="clear" (click)="prevMonth()" aria-label="Mes anterior">
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+
+        <span class="month-title">{{ monthNames[displayedMonth].toUpperCase() }}</span>
+
+        <ion-button fill="clear" (click)="nextMonth()" aria-label="Siguiente mes">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- ...encabezado y month-nav quedan igual... -->
+      <!-- Días estilo tarjetas agenda -->
+      <ion-list class="day-cards">
+        <ion-card class="day-card" *ngFor="let item of calendarDays" (click)="goToRecordatorio(item.day)">
+          <ion-card-header class="day-header">
+            <div class="day-name">
+              <!-- check inline -->
+              <span class="inline-check" *ngIf="item.events?.length"></span>
+              {{ item.dayName }}
+            </div>
+
+            <div class="day-number">{{ item.day }}</div>
+
+            <div class="month">
+              {{ monthNames[displayedMonth].slice(0, 3).toUpperCase() }}
+            </div>
+          </ion-card-header>
+        </ion-card>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

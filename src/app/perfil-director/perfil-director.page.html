@@ -1,48 +1,107 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Perfil del Director</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <img src="../../assets/images/aea-pica.png" class="header-logo" alt="Logo">
+    </ion-buttons>
+    <ion-title class="header-title">Institución Educativa 2005 Retablo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="perfil-content">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Información Personal</ion-card-title>
-    </ion-card-header>
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="background-decoration"></div>
 
-    <ion-card-content>
+  <div class="main-container">
+    
+    <div class="top-nav">
+      <ion-button fill="clear" (click)="goBack()" class="nav-btn"> 
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      
+      <h1 class="page-title">Perfil del Director</h1>
+      <ion-button fill="clear" class="nav-btn" (click)="goToNotificaciones()">
+        <ion-icon name="notifications" color="warning"></ion-icon>
+      </ion-button>
+    </div>
 
-      <div class="form-grid">
-        <ion-item>
-          <ion-label position="floating" class="label">Nombre completo</ion-label>
-          <ion-input [(ngModel)]="perfil.nombre"></ion-input>
-        </ion-item>
+    <div class="avatar-section">
+      <div class="avatar-circle">
+        <img [src]="perfil.fotoUrl || 'assets/default-avatar.png'" alt="Foto perfil">
+      </div>
+      
+      <div class="upload-action" (click)="subirFoto()">
+        <div class="icon-box">
+          <ion-icon name="folder-open"></ion-icon>
+        </div>
+        <span class="upload-text">Subir foto</span>
+      </div>
+    </div>
 
-        <ion-item>
-          <ion-label position="floating" class="label">Correo electrónico</ion-label>
-          <ion-input [(ngModel)]="perfil.correo" type="email"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating" class="label">Teléfono</ion-label>
-          <ion-input [(ngModel)]="perfil.telefono" type="tel"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating" class="label">Cargo</ion-label>
-          <ion-input [(ngModel)]="perfil.cargo"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating" class="label">Departamento</ion-label>
-          <ion-input [(ngModel)]="perfil.departamento"></ion-input>
-        </ion-item>
+    <div class="form-section">
+      
+      <div class="custom-input-group">
+        <label>Nombre completo</label>
+        <ion-input 
+          [(ngModel)]="perfil.nombre" 
+          placeholder="Ingrese nombres"
+          class="no-border-input">
+        </ion-input>
       </div>
 
-      <ion-button expand="block" class="btn-guardar" (click)="guardarCambios()">
-        Guardar Cambios
-      </ion-button>
+      <div class="custom-input-group">
+        <label>Correo electrónico</label>
+        <ion-input 
+          [(ngModel)]="perfil.correo" 
+          type="email" 
+          placeholder="Ingrese correo"
+          class="no-border-input">
+        </ion-input>
+      </div>
 
-    </ion-card-content>
-  </ion-card>
+      <div class="custom-input-group">
+        <label>Teléfono</label>
+        <ion-input 
+          [(ngModel)]="perfil.telefono" 
+          type="tel" 
+          placeholder="Ingrese teléfono"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+      <div class="custom-input-group">
+        <label>Cargo</label>
+        <ion-input 
+          [(ngModel)]="perfil.cargo" 
+          type="text" 
+          placeholder="Ej: Director General"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+      <div class="custom-input-group">
+        <label>Departamento</label>
+        <ion-input 
+          [(ngModel)]="perfil.departamento" 
+          type="text" 
+          placeholder="Ej: Administración"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+    </div>
+
+    <input 
+      type="file" 
+      id="fileInputDirector" 
+      (change)="cargarImagen($event)" 
+      accept="image/*" 
+      style="display: none;">
+
+    <div class="footer-action">
+      <ion-button expand="block" class="btn-guardar" (click)="guardarCambios()">
+        Guardar cambios
+        <ion-icon name="add-circle" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div> 
 </ion-content>

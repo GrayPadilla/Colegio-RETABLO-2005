@@ -1,70 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 :host {
-  --ion-background-color: #ffffff !important; /* Fondo blanco global */
-  --ion-item-background: #ffffff !important;
-  background-color: #ffffff !important;
+  --ion-font-family: 'Poppins', sans-serif;
+  --primary-blue: #2b74f0;
 }
 
-ion-content.reportes-content {
-  --background: #ffffff !important;
-  background-color: #ffffff !important;
-  padding: 20px;
+/* fondo fijo */
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../../assets/icon/fondo.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(0.6px) brightness(1.02);
+  pointer-events: none;
 }
 
+/* ion-content transparente para dejar ver fondo */
+ion-content {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+/* Header */
 .header-toolbar {
-  --background: #4a90e2 !important;
-  --color: #ffffff;
+  --background: var(--primary-blue);
+  color: white;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+}
+/* LOGO + NOMBRE (al lado de la flecha) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px; /* separación de la flecha */
 }
 
-.search-toolbar {
-  --background: #ffffff !important;
+/* Logo */
+.logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.searchbar-custom {
-  --background: #ffffff !important;
-  --color: #000000;
-  --placeholder-color: #999999;
-  padding: 0 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.nuevo-reporte-btn {
-  margin: 20px 0;
-  --background: #4a90e2;
-  --color: #ffffff;
+/* Texto del colegio */
+.school-name {
+  color: white;
+  font-size: 14px;
   font-weight: 600;
-  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* CAMPANA */
+.notif-btn {
+  position: relative;
+  color: white;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff3b30;
+  color: white;
+  font-size: 11px;
   border-radius: 10px;
-  width: 100%;
-  max-width: 300px;
+  padding: 2px 5px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* wrapper y white-sheet como en reuniones */
+.sheet-wrapper {
+  position: relative;
+  margin-top: 8px;
+  padding: 12px 14px 20px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.25);
+  z-index: 5;
 }
 
-.lista-reportes {
-  --background: #ffffff !important;
-  background-color: #ffffff !important;
-  padding: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+/* white-sheet */
+.white-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.82);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) inset;
+  z-index: 0;
+  pointer-events: none;
 }
 
-ion-item {
-  --border-radius: 12px;
-  background: #ffffff !important;
-  border: 1px solid #e0e6ed;
+/* contenido encima */
+.content-inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Botón pill centrado */
+.top-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
   margin-bottom: 10px;
 }
-
-ion-label h3 {
-  font-size: 1rem;
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--primary-blue);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: none;
   font-weight: 600;
-  color: #344054;
-  margin-bottom: 4px;
+  box-shadow: 0 6px 16px rgba(43,116,240,0.18);
 }
 
-ion-label p {
-  font-size: 0.875rem;
-  color: #667085;
+/* Card que contiene la "tabla" */
+.table-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* Tabla estilo tarjetas */
+.informes-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  border: 1px solid rgba(43,116,240,0.12);
+}
+
+/* encabezado azul */
+.informes-table thead tr th {
+  background: var(--primary-blue);
+  color: #fff;
+  padding: 10px 12px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 13px;
+}
+
+/* cuerpo */
+.informes-table tbody tr td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 13px;
+  color: #12233b;
+}
+
+/* Asunto truncado si es largo */
+.asunto {
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fecha y tipo */
+.fecha, .tipo {
+  font-size: 13px;
+  color: #334155;
+}
+
+/* Acciones: botones redondos */
+.acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* boton circular */
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  background: #d1d9e6;
+  color: white;
+}
+.btn-view {
+  background: #4a90e2;
+  color: white;
+}
+
+/* Banner ad */
+.ad-wrapper {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+.ad-wrapper img {
+  width: 92%;
+  max-width: 720px;
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+/* Barra de búsqueda debajo del header */
+.search-toolbar {
+  --background: rgba(255,255,255,0.82) !important;
+  background: rgba(255,255,255,0.82) !important;
+  backdrop-filter: blur(4px);
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  margin-bottom: 6px;
+  z-index: 20;
+}
+
+/* Estilo del searchbar */
+ion-searchbar {
+  --background: #ffffff;
+  --border-radius: 14px;
+  --color: #12233b;
+  --placeholder-color: #666;
+  padding: 10px 14px;
+}
+
+
+/* responsive */
+@media (max-width: 420px) {
+  .informes-table thead tr th { font-size: 12px; }
+  .informes-table tbody tr td { font-size: 12px; }
+  .pill-btn { padding: 9px 14px; font-size: 13px; }
+  .btn-circle { width: 36px; height: 36px; }
 }

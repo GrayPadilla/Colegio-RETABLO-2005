@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="header-title">
+      Notificaciones
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <!-- Fondo fijo detrás de todo -->
+  <div class="background-image" aria-hidden="true"></div>
+
+  <div class="notificaciones-wrapper">
+
+    <!-- Barra de búsqueda (estética) -->
+    <section>
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="search-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Buscar notificaciones"></ion-input>
+      </ion-item>
+    </section>
+
+    <!-- Lista tipo tarjeta como el mock -->
+    <section class="lista-notificaciones">
+      <ion-list>
+        <ion-item
+          *ngFor="let n of notificaciones"
+          lines="none"
+          class="notif-item"
+        >
+          <ion-avatar slot="start">
+            <ion-icon name="notifications-outline"></ion-icon>
+          </ion-avatar>
+
+          <ion-label>
+            <h3>
+              Tiene una nueva notificación "{{ n.titulo }}"
+            </h3>
+            <p class="notif-mensaje">
+              {{ n.mensaje }}
+            </p>
+            <p class="notif-meta">
+              App Retablo 2005 ·
+              <span *ngIf="n.creadaEn?.seconds">
+                {{ (n.creadaEn.seconds * 1000) | date: 'short' }}
+              </span>
+            </p>
+          </ion-label>
+
+          <div slot="end" class="badge-container">
+            <span class="badge">1</span>
+          </div>
+        </ion-item>
+
+        <ion-item *ngIf="notificaciones.length === 0" lines="none">
+          <ion-label class="empty-text">
+            No tienes notificaciones.
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </section>
+  </div>
+</ion-content>

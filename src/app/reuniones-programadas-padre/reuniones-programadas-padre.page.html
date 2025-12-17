@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="toolbar-title">Institución Educativa 2005 Retablo</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="notif-btn" (click)="goNotificaciones()" aria-label="Notificaciones">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Fondo y white-sheet -->
+<div class="background-image" aria-hidden="true"></div>
+<div class="white-sheet" aria-hidden="true"></div>
+
+<ion-content fullscreen>
+  <!-- Fondo (permanece fijo detrás de todo) -->
+<div class="background-image" aria-hidden="true"></div>
+
+<ion-content fullscreen>
+  <!-- WRAPPER: contiene la white-sheet y el contenido real -->
+  <div class="sheet-wrapper">
+    <!-- white-sheet ahora está DENTRO del wrapper, se ajustará a la altura del wrapper -->
+    <div class="white-sheet" aria-hidden="true"></div>
+
+    <!-- Contenido real (tarjeta/tabla + anuncio) está encima de la white-sheet -->
+    <div class="content-inner">
+      <!-- Botón pill centrado -->
+      <div class="top-action">
+        <button class="pill-btn" (click)="goToSolicitarReunion()" aria-label="Solicitar reunion">
+          <ion-icon name="add-outline"></ion-icon>
+          <span>Solicitar reunion</span>
+        </button>
+      </div>
+
+      <!-- Contenedor de la tabla -->
+      <div class="table-card">
+        <table class="reuniones-table" role="table" aria-label="Lista de reuniones">
+          <thead>
+            <tr>
+              <th>Asunto</th>
+              <th>Fecha y hora</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of reuniones">
+              <td class="asunto">{{ r.asunto }}</td>
+              <td class="fecha">
+                <div class="fecha-line">{{ r.fecha }}</div>
+                <div class="hora-line">{{ r.hora }}</div>
+              </td>
+              <td class="acciones">
+                <button class="btn-circle btn-ok" (click)="comenzarReunion(r)">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </button>
+                <button class="btn-circle btn-del" (click)="eliminarReunion(r)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Banner publicitario (también dentro del wrapper para que la white-sheet lo cubra) -->
+      <div class="ad-wrapper" role="region" aria-label="Publicidad">
+        <img src="../../assets/images/ImagenRestablecerContrasena.png" alt="Publicidad" />
+      </div>
+    </div> <!-- .content-inner -->
+  </div> <!-- .sheet-wrapper -->
+</ion-content>

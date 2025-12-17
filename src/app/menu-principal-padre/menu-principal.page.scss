@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* ============================
+   Config global / reset
+   ============================ */
+:host {
+  --ion-font-family: 'Poppins', sans-serif;
+  --ion-color-primary: #2b74f0;
+}
+
+/* Forzar fondo blanco en ion-content por seguridad (evita negro inesperado) */
+ion-content {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* ============================
+   CAPA 1: IMAGEN DE FONDO (abajo)
+   ============================ */
+/* Ruta: uso la imagen subida. Si prefieres usar assets:
+   reemplaza url('/mnt/data/....png') por url('../../assets/icon/fondo.png') */
+.background-image {
+  position: fixed; /* fijo detrás de todo */
+  inset: 0;
+  z-index: 1;
+  background-image: url('../../assets/icon/fondo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  filter: blur(0.8px) saturate(1.02);
+  opacity: 1; /* imagen visible */
+  pointer-events: none;
+}
+
+/* ============================
+   CAPA 2: BLOQUE BLANCO DETRÁS DE TARJETAS
+   ============================ */
+.white-sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100%);
+  background: rgba(255, 255, 255, 0.429); /* blanco lavado sobre la imagen */
+  z-index: 2;
+  box-shadow: 0 8px 30px rgba(11,37,74,0.04) inset;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  pointer-events: none;
+}
+
+/* ============================
+   CONTENIDO (CAPA 3: TARJETAS)
+   ============================ */
+.content-inner {
+  position: relative;
+  z-index: 3; /* encima del white-sheet */
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 18px 14px 28px;
+}
+
+/* HEADER */
+.header-toolbar {
+  --background: #2b74f0;
+  color: #fff;
+  height: 56px;
+}
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+.header-center .logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+}
+.header-center span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* TITULO */
+.section-title {
+  text-align: center;
+  margin: 8px 0 16px;
+  font-size: 18px;
+  color: #2b74f0;
+  font-weight: 700;
+}
+
+/* Area que contiene las tarjetas (centrada y con separación) */
+.cards-area {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* grid vertical central de tarjetas */
+.menu-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+/* ============================
+   TARJETAS (estilo prototipo: vertical)
+   ============================ */
+.menu-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 14px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 3px solid #2b74f0; /* borde azul más visible */
+  color: #12233b;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 10px 26px rgba(11,37,74,0.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  text-align: center;
+}
+
+/* icono encima del texto */
+.card-icon {
+  font-size: 28px;
+  color: #2b74f0;
+}
+
+/* texto en la tarjeta */
+.card-text {
+  font-size: 14px;
+  color: #2b74f0;
+  line-height: 1.1;
+  text-transform: none;
+}
+
+/* hover / active (touch) */
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(43,116,240,0.10);
+  cursor: pointer;
+}
+.menu-card:active {
+  transform: translateY(-2px);
+}
+
+/* ============================
+   BANNER (fuera del white-sheet)
+   ============================ */
+.ad-wrapper {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+.ad-wrapper img {
+  width: 92%;
+  max-width: 360px;
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 420px) {
+  .content-inner {
+    padding: 12px 10px 20px;
+  }
+  .menu-card {
+    max-width: 320px;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+  .card-icon {
+    font-size: 26px;
+  }
+  .card-text {
+    font-size: 13px;
+  }
+}

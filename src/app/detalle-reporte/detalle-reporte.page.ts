@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { ReportesService } from '../services/reportes.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-detalle-reporte',
@@ -12,59 +14,69 @@ import html2canvas from 'html2canvas';
   templateUrl: './detalle-reporte.page.html',
   styleUrls: ['./detalle-reporte.page.scss'],
 })
-export class DetalleReportePage {
+export class DetalleReportePage implements OnInit, OnDestroy {
   reporte: any;
+  notificationCount = 1;
 
-  constructor(private route: ActivatedRoute) {}
+  userDocID!: string;
+  reporteID!: string;
+
+  private sub?: Subscription;
+
+  constructor(
+    private route: ActivatedRoute,
+    private navCtrl: NavController,
+    private reportesService: ReportesService
+  ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.cargarReporte(id);
+    // leer parámetros
+    this.userDocID = this.route.snapshot.paramMap.get('id')!;
+    this.reporteID = this.route.snapshot.paramMap.get('rid')!;
+
+    console.log("ID usuario:", this.userDocID);
+    console.log("ID reporte:", this.reporteID);
+
+    // cargar reporte
+    this.sub = this.reportesService
+      .getReporteById(this.reporteID)
+      .subscribe(r => {
+        this.reporte = r;
+      });
   }
 
-  cargarReporte(id: string | null) {
-    const reportesSimulados = [
-      {
-        id: '1',
-        titulo: 'Asistencia mensual - 1ro A',
-        tipo: 'Asistencia',
-        fecha: '15/05/2025',
-        gradoSeccion: '1ro A',
-        descripcion: 'Se registraron 3 faltas y 2 tardanzas en el mes.'
-      },
-      {
-        id: '2',
-        titulo: 'Informe de conducta - Abril',
-        tipo: 'Actividad',
-        fecha: '10/05/2025',
-        gradoSeccion: '2do B',
-        descripcion: 'Se observaron mejoras en el comportamiento de la mayoría de estudiantes.'
-      },
-      {
-        id: '3',
-        titulo: 'Reunión con Padres - 2do B',
-        tipo: 'Asistencia',
-        fecha: '08/05/2025',
-        gradoSeccion: '2do B',
-        descripcion: 'Se realizó una reunión para tratar temas de rendimiento académico.'
-      }
-    ];
-
-    this.reporte = reportesSimulados.find(r => r.id === id);
+  ngOnDestroy() {
+    this.sub?.unsubscribe();
   }
 
-  generarPDF() {
-    const elemento = document.getElementById('reporte-pdf');
+  goBack() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.navCtrl.navigateBack(['/', this.userDocID, 'reportes-asistencia']);
+  }
+
+  goNotificaciones() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.navCtrl.navigateForward(['/', this.userDocID, 'notificaciones-director']);
+  }
+
+  async generarPDF() {
+    const { default: html2canvas } = await import('html2canvas');
+    const elemento = document.getElementById('pdf-wrapper');
     if (!elemento) return;
 
-    html2canvas(elemento).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('reporte.pdf');
+    const canvas = await html2canvas(elemento, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff'
     });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('reporte.pdf');
   }
 }

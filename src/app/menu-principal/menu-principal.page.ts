@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { RouterModule, Router } from '@angular/router'; // <-- AGREGA Router AQUÍ
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-menu-principal',
@@ -12,25 +12,52 @@ import { RouterModule, Router } from '@angular/router'; // <-- AGREGA Router AQU
 })
 export class MenuPrincipalPage {
 
-  constructor(private router: Router) {} // Ahora funcionará
+  userDocID!: string;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.userDocID = this.route.snapshot.paramMap.get('id')!;
+    console.log("ID recibido:", this.userDocID);
+  }
+
+  goBack() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/entrada']);
+  }
+
+  goNotificaciones() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'notificaciones-director']);
+  }
 
   goToReuniones() {
-    this.router.navigate(['/reuniones-programadas-director']);
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'reuniones-programadas-director']);
   }
-  goToPerfil() {
-  this.router.navigate(['/perfil-director']);
-}
-goToMensajes() {
-  this.router.navigate(['/mensajes']);
-}
-goToConfiguracion() {
-  this.router.navigate(['/configuracion']);
-}
-goToReportes() {
-  this.router.navigate(['/reportes-asistencia']);
-}
-goToCalendario() {
-  this.router.navigate(['/calendario']);
-}
 
+  goToPerfil() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'perfil-director']);
+  }
+
+  goToMensajes() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'mensajes']);
+  }
+
+  goToConfiguracion() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'configuracion']);
+  }
+
+  goToReportes() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'reportes-asistencia']);
+  }
+
+  goToCalendario() {
+    (document.activeElement as HTMLElement | null)?.blur();
+    this.router.navigate(['/', this.userDocID, 'calendario-director']);
+  }
 }

@@ -1,39 +1,91 @@
 <ion-header>
   <ion-toolbar class="header-toolbar">
-    <ion-title>Reportes de Asistencia / Actividad</ion-title>
-  </ion-toolbar>
 
-  <ion-toolbar class="search-toolbar">
-    <ion-searchbar
-      placeholder="Buscar reportes"
-      showCancelButton="focus"
-      debounce="300"
-      animated="true"
-      class="searchbar-custom"
-    ></ion-searchbar>
+    <!-- Botón de regreso -->
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- LOGO + TEXTO (alineados a la izquierda junto a la flecha) -->
+    <div class="header-left">
+      <img src="../../assets/images/aea-pica.png" class="logo" alt="Logo" />
+      <span class="school-name">Institución Educativa 2005 Retablo</span>
+    </div>
+
+    <!-- Botón de búsqueda (lo mantengo como pediste) -->
+    <ion-buttons slot="end">
+      <ion-button fill="clear" aria-label="Buscar" (click)="buscarReportes()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Notificaciones -->
+      <ion-button fill="clear" class="notif-btn" (click)="goNotificaciones()" aria-label="Notificaciones">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="reportes-content">
-  <ion-button
-    expand="block"
-    class="nuevo-reporte-btn"
-    (click)="goToNuevoReporte()"
-  >
-    <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-    Nuevo Reporte
-  </ion-button>
+<!-- Barra de búsqueda que aparece al presionar el ícono -->
+<ion-toolbar *ngIf="mostrarBuscador" class="search-toolbar">
+  <ion-searchbar
+    placeholder="Buscar reportes"
+    debounce="200"
+    (ionInput)="filtrarReportes($event)">
+  </ion-searchbar>
+</ion-toolbar>
 
-  <ion-list class="lista-reportes">
-  <ion-item *ngFor="let r of reportes">
-    <ion-label>
-      <h3>{{ r.titulo }}</h3>
-      <p>{{ r.fecha }} - {{ r.tipo }}</p>
-    </ion-label>
-    <ion-button fill="clear" color="medium" slot="end" (click)="verDetalle(r.id)">
-      <ion-icon name="eye-outline"></ion-icon>
-    </ion-button>
-  </ion-item>
-</ion-list>
+<!-- Fondo general -->
+<div class="background-image" aria-hidden="true"></div>
 
+<ion-content fullscreen>
+  <div class="sheet-wrapper">
+    <div class="white-sheet" aria-hidden="true"></div>
+
+    <div class="content-inner">
+      <!-- Botón pill centrado -->
+      <div class="top-action">
+        <button class="pill-btn" (click)="goToNuevoReporte()" aria-label="Nuevo informe">
+          <ion-icon name="add-outline"></ion-icon>
+          <span>Nuevo Informe</span>
+        </button>
+      </div>
+
+      <!-- Card que contiene la "tabla" de informes -->
+      <div class="table-card" role="region" aria-label="Lista de informes">
+        <table class="informes-table" role="table">
+          <thead>
+            <tr>
+              <th>Asunto</th>
+              <th>Fecha</th>
+              <th>Tipo</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let r of reportes">
+              <td class="asunto">{{ r.titulo }}</td>
+              <td class="fecha">{{ r.fecha }}</td>
+              <td class="tipo">{{ r.tipo }}</td>
+              <td class="acciones">
+                <button class="btn-circle btn-view" (click)="verDetalle(r.id)" aria-label="Ver detalle">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Banner (opcional) -->
+      <div class="ad-wrapper" role="region" aria-label="Publicidad">
+        <img src="../../assets/images/ImagenRestablecerContrasena.png" alt="Publicidad" />
+      </div>
+    </div> <!-- .content-inner -->
+  </div> <!-- .sheet-wrapper -->
 </ion-content>

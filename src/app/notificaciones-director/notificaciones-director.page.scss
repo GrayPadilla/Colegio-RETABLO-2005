@@ -1,0 +1,173 @@
+/* ===============================
+   Colores institucionales
+   =============================== */
+$azul-cole: #0047a5;
+$rojo-cole: #d62828;
+$amarillo-cole: #ffc600;
+$gris-fondo: #f5f7fa;
+
+/* ===============================
+   Fondo general
+   =============================== */
+ion-content {
+  --background: transparent;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../../assets/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(0.6px) brightness(1.02);
+  pointer-events: none;
+}
+
+.content {
+  // ya usamos background-image global, no color sólido
+}
+
+/* ===============================
+   Header
+   =============================== */
+.header-toolbar {
+  --background: #ffffff;
+  --color: $azul-cole;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.header-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+/* ===============================
+   Contenedor principal
+   =============================== */
+.notificaciones-wrapper {
+  padding: 12px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ===============================
+   Títulos de sección
+   =============================== */
+section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+/* ===============================
+   Nueva notificación
+   =============================== */
+.nueva-notificacion {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 12px 12px 14px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.09);
+  border-left: 4px solid $amarillo-cole;
+}
+
+/* ===============================
+   Inputs
+   =============================== */
+.input-item {
+  --background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.mensaje-item {
+  --background: #eef2ff;
+}
+
+/* ===============================
+   BOTÓN PUBLICAR (PRO)
+   =============================== */
+.btn-publicar {
+  --background: linear-gradient(135deg, #2563eb, #1e40af);
+  --background-activated: linear-gradient(135deg, #1e40af, #1e3a8a);
+  --color: #ffffff;
+
+  height: 46px;
+  margin-top: 8px;
+
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover escritorio */
+.btn-publicar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(30, 64, 175, 0.45);
+}
+
+/* Presionado */
+.btn-publicar:active {
+  transform: scale(0.97);
+}
+
+/* ===============================
+   Lista de notificaciones
+   =============================== */
+.lista-notificaciones {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 10px 8px 4px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.notif-item {
+  --background: transparent;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
+
+.notif-item h3 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notif-mensaje {
+  font-size: 0.88rem;
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+.notif-meta {
+  font-size: 0.78rem;
+  margin-top: 6px;
+  color: #9ca3af;
+}
+
+.empty-text {
+  text-align: center;
+  color: #9ca3af;
+}
+
+/* ===============================
+   Edición
+   =============================== */
+.edit-form {
+  width: 100%;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}

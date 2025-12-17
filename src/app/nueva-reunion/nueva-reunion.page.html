@@ -1,86 +1,165 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title class="ion-text-center">🗓️ Programar Nueva Reunión</ion-title>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="header-center">
+      <img src="../../assets/images/aea-pica.png" alt="Logo" class="logo" />
+      <span>Institución Educativa 2005 Retablo</span>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button class="notif-btn" (click)="goNotificaciones()">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="badge">1</span>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card class="form-card">
-    <ion-card-header>
-      <ion-card-title>Información de la Reunión</ion-card-title>
-    </ion-card-header>
+<ion-content fullscreen>
+  <!-- fondo fijo detrás de todo -->
+  <div class="background-image" aria-hidden="true"></div>
 
-    <ion-card-content>
-      <ion-list lines="none" class="form-list">
+  <!-- sheet + contenido -->
+  <div class="sheet-wrapper">
+    <div class="white-sheet" aria-hidden="true"></div>
 
-        <ion-item>
-          <ion-label position="stacked">Asunto <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input [(ngModel)]="asunto" placeholder="Ej. Reunión con padres"></ion-input>
-        </ion-item>
+    <div class="content-inner">
+      <h2 class="section-title">Complete los campos</h2>
 
-        <ion-item>
-          <ion-label position="stacked">Participantes <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input [(ngModel)]="participantes" placeholder="Ej. Padres, docentes, directivos"></ion-input>
-        </ion-item>
+      <!-- Formulario (usamos ngModel como tu módulo tiene FormsModule) -->
+      <form (ngSubmit)="guardarReunion()" class="form">
 
-        <!-- FECHA -->
-<ion-item class="espaciado-item item-ordenado" lines="none">
-  <ion-label position="stacked">Fecha <ion-text color="danger">*</ion-text></ion-label>
-  <ion-datetime
-    [(ngModel)]="fecha"
-    presentation="date"
-    placeholder="Selecciona una fecha">
-  </ion-datetime>
-</ion-item>
+        <!-- ROW: etiqueta a la izquierda + input a la derecha -->
+        <div class="field-row">
+          <div class="field-label-pill">Asunto</div>
+          <div class="field-input">
+            <input type="text" [(ngModel)]="asunto" name="asunto" placeholder="Indicar asunto" />
+          </div>
+        </div>
 
-<!-- HORA -->
-<ion-item class="espaciado-item">
-  <ion-label position="stacked">Hora <ion-text color="danger">*</ion-text></ion-label>
-  <ion-input
-    [(ngModel)]="hora"
-    type="time"
-    placeholder="Selecciona la hora"
-    class="hora-input">
-  </ion-input>
-</ion-item>
+        <div class="field-row">
+          <div class="field-label-pill">Fecha</div>
+          <div class="field-input">
+            <input class="native-input" type="date" [(ngModel)]="fecha" name="fecha" />
+          </div>
+        </div>
 
+        <div class="field-row">
+          <div class="field-label-pill">Hora</div>
+          <div class="field-input">
+            <input class="native-input" type="time" [(ngModel)]="hora" name="hora" />
+          </div>
+        </div>
 
+        <div class="field-row">
+          <div class="field-label-pill">Participantes</div>
 
-        <ion-item>
-          <ion-label position="stacked">Duración Estimada</ion-label>
-          <ion-input [(ngModel)]="duracion" placeholder="Ej. 1 hora, 30 minutos"></ion-input>
-        </ion-item>
+          <div class="field-input">
+            <!-- chips de participantes -->
+            <div class="chips">
+              <span class="chip" *ngFor="let p of participantes">
+                {{ p.nombre }} <small class="muted">({{ p.correo }})</small>
+                <button type="button" class="chip-x" (click)="removeParticipant(p.correo)">✕</button>
+              </span>
+            </div>
 
-        <ion-item>
-          <ion-label position="stacked">Ubicación / Modalidad</ion-label>
-          <ion-input [(ngModel)]="ubicacion" placeholder="Ej. Aula 2B, Zoom, Dirección"></ion-input>
-        </ion-item>
+            <!-- input para buscar/añadir -->
+            <input
+              type="text"
+              name="participantesInput"
+              [(ngModel)]="participantesInput"
+              (input)="onParticipantesInputChange()"
+              placeholder="Escribe email o nombre y selecciona..."
+            />
 
-        <ion-item>
-          <ion-label position="stacked">Responsable</ion-label>
-          <ion-input [(ngModel)]="responsable" placeholder="Nombre del responsable"></ion-input>
-        </ion-item>
+            <!-- lista de sugerencias -->
+            <div class="suggestions" *ngIf="suggestionsParticipantes.length > 0">
+              <button type="button" class="suggestion" *ngFor="let s of suggestionsParticipantes" (click)="selectSuggestion(s)">
+                {{ s.nombre || s.correo }} <small class="muted">{{ s.correo }}</small>
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <ion-item lines="none" class="checkbox-item">
-          <ion-checkbox slot="start" [(ngModel)]="requiereConfirmacion"></ion-checkbox>
-          <ion-label>¿Requiere confirmación de asistencia?</ion-label>
-        </ion-item>
+        <div class="field-row">
+          <div class="field-label-pill">Zoom</div>
+          <div class="field-input zoom-input">
+            <input type="text" [(ngModel)]="ubicacion" name="ubicacion" placeholder="Colocar el link" />
 
-        <ion-item>
-          <ion-label position="stacked">Descripción</ion-label>
-          <ion-textarea [(ngModel)]="descripcion" placeholder="Temas a tratar, puntos clave, etc."></ion-textarea>
-        </ion-item>
+            <button type="button" class="zoom-btn" (click)="crearZoom()">
+              <ion-icon name="videocam-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
 
-        <ion-item>
-          <ion-label position="stacked">Observaciones (solo para el director)</ion-label>
-          <ion-textarea [(ngModel)]="observaciones" placeholder="Notas internas, confidenciales..."></ion-textarea>
-        </ion-item>
+        <!-- Campos adicionales (ocultos visualmente si quieres, pero presentes) -->
+        <details class="extra-details">
+          <summary>Más opciones</summary>
 
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+          <div class="field-row">
+            <div class="field-label-pill small">Duración</div>
+            <div class="field-input">
+              <input type="text" [(ngModel)]="duracion" name="duracion" placeholder="Ej. 1 hora" />
+            </div>
+          </div>
 
-  <ion-button expand="block" color="success" (click)="guardarReunion()">
-    💾 Guardar Reunión
-  </ion-button>
+          <div class="field-row">
+            <div class="field-label-pill small">Responsable</div>
+            <div class="field-input">
+              <input
+                type="text"
+                name="responsableInput"
+                [(ngModel)]="responsableInput"
+                readonly
+                style="background-color: #e9e9e9; font-weight: 600;"
+              />
+              <div class="responsable-selected" *ngIf="responsableSelected">
+                Responsable fijo del sistema
+              </div>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label-pill small">Descripción</div>
+            <div class="field-input">
+              <textarea rows="3" [(ngModel)]="descripcion" name="descripcion" placeholder="Temas a tratar"></textarea>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label-pill small">Observaciones</div>
+            <div class="field-input">
+              <textarea rows="2" [(ngModel)]="observaciones" name="observaciones" placeholder="Notas internas"></textarea>
+            </div>
+          </div>
+
+          <div class="field-row checkbox-row">
+            <label class="checkbox-pill">
+              <input type="checkbox" [(ngModel)]="requiereConfirmacion" name="requiereConfirmacion" />
+              <span>Requiere confirmación</span>
+            </label>
+          </div>
+
+        </details>
+
+        <!-- Botón principal -->
+        <div class="actions">
+          <button type="submit" class="create-btn">
+            Crear reunión <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </div>
+      </form>
+
+      <!-- publicidad / banner (igual que otras pantallas) -->
+      <div class="ad-wrapper">
+        <img src="../../assets/images/ImagenRestablecerContrasena.png" alt="Publicidad" />
+      </div>
+
+    </div> <!-- content-inner -->
+  </div> <!-- sheet-wrapper -->
 </ion-content>

@@ -34,6 +34,13 @@
             "styles": [  "src/global.scss",
                           "src/theme/variables.scss",
                           "node_modules/swiper/swiper-bundle.min.css"],
+            "allowedCommonJsDependencies": [
+              "canvg",
+              "html2canvas",
+              "core-js",
+              "raf",
+              "rgbcolor"
+            ],
             "scripts": []
           },
           "configurations": {

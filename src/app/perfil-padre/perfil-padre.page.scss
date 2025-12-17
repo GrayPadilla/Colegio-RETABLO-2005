@@ -1,0 +1,185 @@
+// Variables de color basadas en tu imagen
+$blue-primary: #4e8eff; // Azul claro vibrante
+$blue-text: #4e8eff;
+$bg-white: #ffffff;
+
+.custom-toolbar {
+  --background: #3b82f6;
+  --color: white;
+  --min-height: 70px; /* CAMBIO: Aumentamos la altura de la barra */
+  
+  .header-logo {
+    height: 48px; /* CAMBIO: Antes 32px, ahora más grande */
+    width: auto;  /* Para mantener la proporción */
+    margin-left: 8px;
+  }
+  
+  .header-title {
+    font-size: 1.2rem; /* CAMBIO: Antes 0.9rem, ahora se leerá mucho mejor */
+    font-weight: 700;  /* Más negrita */
+    text-align: center;
+    line-height: 1.2;  /* Para que si ocupa dos líneas no se vea apretado */
+    padding: 0 10px;
+  }
+}
+
+.page-content {
+  --background: #ffffff;
+}
+
+// Marca de agua de fondo (Libros/Birrete)
+.background-decoration {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* CAMBIO: Usamos /assets/ directo. Asegúrate que la imagen esté en src/assets/ */
+  background: url('/assets/fondo-libros.png') no-repeat center center;
+  background-size: contain; 
+  
+  z-index: 0;
+  opacity: 0.4; /* Bajé un poco la opacidad para que no compita con el texto */
+  pointer-events: none;
+}
+
+.main-container {
+  position: relative;
+  z-index: 1;
+  padding: 16px 20px 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// Navegación superior (Flecha - Título - Campana)
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  .nav-btn {
+    --color: #{$blue-primary};
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $blue-text;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+// Sección Avatar
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .avatar-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e0e0e0;
+    border: 5px solid #fff; // Borde blanco interno opcional
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); // Sombra suave
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .upload-action {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+
+    .icon-box {
+      color: $blue-primary;
+      font-size: 24px;
+      background: rgba(78, 142, 255, 0.1);
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-text {
+      color: $blue-primary;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Inputs personalizados
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-input-group {
+  border: 2px solid $blue-primary;
+  border-radius: 12px;
+  background: white;
+  padding: 8px 16px 4px 16px; // Padding interno
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(78, 142, 255, 0.1);
+
+  label {
+    color: $blue-primary;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+  }
+
+  .no-border-input {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --background: transparent;
+    font-size: 1rem;
+    color: #444;
+    min-height: auto;
+    --placeholder-color: #a0a0a0;
+  }
+}
+
+// Botón inferior
+.footer-action {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  .btn-guardar {
+    --background: #4e8eff; // Mismo azul que los bordes
+    --border-radius: 25px;
+    --box-shadow: 0 8px 20px rgba(78, 142, 255, 0.4);
+    width: 100%;
+    max-width: 300px;
+    height: 50px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    --text-transform: none; // Evitar mayúsculas forzadas
+    
+    ion-icon {
+      font-size: 1.4rem;
+      margin-left: 8px;
+    }
+  }
+}

@@ -39,6 +39,7 @@ export class OlvidarContrasenaPage implements OnInit {
   }
 
   goBack() {
+    (document.activeElement as HTMLElement | null)?.blur();
     this.router.navigate(['/intro']);
   }
 
@@ -61,6 +62,7 @@ export class OlvidarContrasenaPage implements OnInit {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, correoIngresado);
       alert('Se ha enviado un enlace para restablecer la contraseña a tu correo.');
+      (document.activeElement as HTMLElement | null)?.blur();
       this.router.navigate(['/restablecer-contrasena']);
     } catch (error) {
       console.error('Error al enviar el correo de recuperación:', error);

@@ -61,4 +61,20 @@
   border-radius: 8px;
 }
 
+.alert-input {
+  color: #000 !important;        /* texto negro */
+}
+
+.custom-alert .alert-input {
+  color: #000 !important;        /* por si usas cssClass */
+}
+
+.custom-alert input {
+  color: #000 !important;
+  padding-right: 40px !important; /* espacio para el ojo */
+}
+
+.custom-alert ion-icon {
+  z-index: 9999;
+}
   

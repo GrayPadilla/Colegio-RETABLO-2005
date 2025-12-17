@@ -19,10 +19,12 @@ export class RestablecerContrasenaPage {
   constructor(private router: Router) {}
 
   goBack() {
+    (document.activeElement as HTMLElement | null)?.blur();
     this.router.navigate(['/olvidar-contrasena']);
   }
 
   irALogin() {
+    (document.activeElement as HTMLElement | null)?.blur();
     this.router.navigate(['/intro']);
   }
 

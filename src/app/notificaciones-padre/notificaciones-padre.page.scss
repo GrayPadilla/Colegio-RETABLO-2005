@@ -1,0 +1,107 @@
+/* Colores del escudo institucional */
+$azul-cole: #0047a5;
+$rojo-cole: #d62828;
+$amarillo-cole: #ffc600;
+$gris-fondo: #f5f7fa;
+
+ion-content {
+  --background: transparent;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../../assets/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(0.6px) brightness(1.02);
+  pointer-events: none;
+}
+
+.content {
+  // ya usamos background-image global, no color sólido
+}
+
+.header-toolbar {
+  --background: #ffffff;
+  --color: $azul-cole;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.header-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.notificaciones-wrapper {
+  padding: 12px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.lista-notificaciones {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 10px 8px 4px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.notif-item {
+  --background: transparent;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
+
+.notif-item h3 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notif-mensaje {
+  font-size: 0.88rem;
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+.notif-meta {
+  font-size: 0.78rem;
+  margin-top: 6px;
+  color: #9ca3af;
+}
+
+.empty-text {
+  text-align: center;
+  color: #9ca3af;
+}
+
+.badge-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge {
+  background-color: $rojo-cole;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}

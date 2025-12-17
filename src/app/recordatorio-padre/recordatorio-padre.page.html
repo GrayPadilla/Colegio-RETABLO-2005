@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="header-left">
+      <img src="../../assets/images/aea-pica.png" class="logo" alt="Logo" />
+      <span class="school-name">Institución Educativa 2005 Retablo</span>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="notif-btn" (click)="goNotificaciones()" aria-label="Notificaciones">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Fondo fijo -->
+<div class="background-image" aria-hidden="true"></div>
+
+<ion-content fullscreen>
+  <div class="sheet-wrapper">
+    <div class="white-sheet" aria-hidden="true"></div>
+
+    <div class="content-inner">
+
+      <!-- LISTA: UNA TARJETA POR RECORDATORIO -->
+      <div class="recordatorios-list">
+
+        <!-- Si no hay recordatorios -->
+        <div class="recordatorio-empty" *ngIf="!reuniones || reuniones.length === 0">
+          <p>No hay recordatorios para este día.</p>
+        </div>
+
+        <!-- UNA tarjeta por cada reunión -->
+        <div class="recordatorio-card" *ngFor="let r of reuniones">
+          <div class="check-indicator" *ngIf="true">
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
+
+          <div class="fecha-box">
+            <div class="fecha-dia">{{ diaNombre }}</div>
+            <div class="fecha-numero">{{ diaSeleccionado }}</div>
+            <div class="fecha-mes">{{ mesSeleccionado }}</div>
+          </div>
+
+          <div class="recordatorio-body">
+            <p class="motivo">{{ r.asunto }}</p>
+
+            <p class="descripcion" *ngIf="r.descripcion">
+              {{ r.descripcion }}
+            </p>
+
+            <p class="hora" *ngIf="r.hora">{{ r.hora }}</p>
+
+            <a class="link"
+               *ngIf="r.ubicacion"
+               [href]="r.ubicacion"
+               target="_blank" rel="noopener noreferrer">
+              Abrir enlace de la reunión
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- /recordatorios-list -->
+
+    </div> <!-- .content-inner -->
+  </div> <!-- .sheet-wrapper -->
+</ion-content>

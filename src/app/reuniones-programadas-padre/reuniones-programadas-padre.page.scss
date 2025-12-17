@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:host {
+  --ion-font-family: 'Poppins', sans-serif;
+  --primary-blue: #2b74f0;
+}
+
+/* fondo de pantalla (imagen completa) */
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../../assets/icon/fondo.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(0.6px) brightness(1.02);
+  pointer-events: none;
+}
+
+/* ion-content transparente para dejar ver fondo */
+ion-content {
+  --background: transparent !important;
+  background: transparent !important;
+  transform: none !important;
+}
+
+/* Header */
+.header-toolbar {
+  --background: var(--primary-blue);
+  color: #fff;
+  height: 56px;
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* El wrapper controla el área sobre la que queremos que esté la hoja blanca */
+.sheet-wrapper {
+  position: relative;          /* contenedor de referencia para .white-sheet */
+  margin-top: 8px;             /* separacion bajo el header */
+  padding: 12px 14px 20px;     /* espacio interior alrededor del contenido */
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 5;                  /* wrapper por encima del fondo (0) */
+}
+
+/* badge notificaciones */
+.notif-btn { position: relative; }
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #ff3b30;
+  color: white;
+  font-size: 11px;
+  padding: 0 4px;
+}
+
+/* white-sheet fijada bajo el header */
+.white-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* bottom se ajusta al padding del wrapper para dar margen al contenido */
+  bottom: 0;
+  background: rgba(255,255,255,0.82);
+  border-radius: 14px;         /* bordes suavizados que encajan con la table-card */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) inset;
+  z-index: 0;                  /* detrás del contenido (que tendrá z-index > 0) */
+  pointer-events: none;
+}
+
+/* contenido encima de la hoja */
+.content-inner {
+  position: relative;
+  z-index: 2;                  /* por encima de la white-sheet */
+}
+
+/* Botón pill “Solicitar reunion” centrado */
+.top-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--primary-blue);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(43,116,240,0.18);
+}
+
+/* card que contiene la tabla (borde redondeado y borde exterior) */
+.table-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* Tabla con bordes y filas */
+.reuniones-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  border: 1px solid rgba(43,116,240,0.12);
+}
+
+/* encabezado azul */
+.reuniones-table thead tr th {
+  background: var(--primary-blue);
+  color: #fff;
+  padding: 10px 12px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 13px;
+}
+
+/* cuerpo */
+.reuniones-table tbody tr td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 13px;
+  color: #12233b;
+}
+
+/* Asunto: truncado si es largo */
+.asunto {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fecha y hora apilados */
+.fecha .fecha-line {
+  font-weight: 600;
+  color: #0b69d8;
+}
+.fecha .hora-line {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Acciones: botones redondos */
+.acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* boton circular */
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+.btn-ok {
+  background: #10b981; /* verde */
+  color: white;
+}
+.btn-del {
+  background: #ef4444; /* rojo */
+  color: white;
+}
+
+/* Banner ad */
+.ad-wrapper {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+.ad-wrapper img {
+  width: 92%;
+  max-width: 720px;
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+/* FAB fijo */
+ion-fab-button {
+  --background: var(--primary-blue);
+  --box-shadow: 0 8px 18px rgba(43,116,240,0.25);
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+  .reuniones-table thead tr th { font-size: 12px; }
+  .reuniones-table tbody tr td { font-size: 12px; }
+  .pill-btn { padding: 9px 14px; font-size: 13px; }
+  .btn-circle { width: 36px; height: 36px; }
+}

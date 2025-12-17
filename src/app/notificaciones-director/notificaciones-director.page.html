@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="header-title">
+      Complete los campos
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <!-- Fondo fijo detrás de todo -->
+  <div class="background-image" aria-hidden="true"></div>
+
+  <div class="notificaciones-wrapper">
+
+    <!-- FORMULARIO PRINCIPAL (similar al mock de reunión) -->
+    <section class="nueva-notificacion">
+      <h2>Programar notificación</h2>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Asunto</ion-label>
+        <ion-input
+          placeholder="Indicar asunto"
+          [(ngModel)]="tituloNueva">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Fecha</ion-label>
+        <ion-input
+          type="date"
+          [(ngModel)]="fechaNueva">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-label position="stacked">Hora</ion-label>
+        <ion-input
+          type="time"
+          [(ngModel)]="horaNueva">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item mensaje-item">
+        <ion-label position="stacked">Mensaje (opcional)</ion-label>
+        <ion-textarea
+          autoGrow="true"
+          placeholder="Indicar los detalles de la reunión"
+          [(ngModel)]="mensajeNuevo">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        class="btn-publicar"
+        (click)="crearNotificacion()">
+        Enviar
+      </ion-button>
+    </section>
+
+    <!-- HISTORIAL DE NOTIFICACIONES -->
+    <section class="lista-notificaciones">
+      <h2>Notificaciones enviadas</h2>
+
+      <ion-list>
+        <ion-item
+          *ngFor="let n of notificaciones"
+          lines="none"
+          class="notif-item">
+
+          <!-- Vista normal -->
+          <ion-label *ngIf="editandoId !== n.id">
+            <h3>{{ n.titulo }}</h3>
+
+            <p class="notif-mensaje" *ngIf="n.mensaje">
+              {{ n.mensaje }}
+            </p>
+
+            <p class="notif-meta">
+              {{ n.fecha || 'Sin fecha' }} ·
+              {{ n.hora || 'Sin hora' }} ·
+              <span *ngIf="n.creadaEn?.seconds">
+                {{ (n.creadaEn.seconds * 1000) | date:'short' }}
+              </span>
+            </p>
+
+            <div class="edit-buttons">
+              <ion-button
+                fill="clear"
+                size="small"
+                (click)="iniciarEdicion(n)">
+                <ion-icon slot="start" name="create-outline"></ion-icon>
+                Editar
+              </ion-button>
+
+              <ion-button
+                fill="clear"
+                color="danger"
+                size="small"
+                (click)="eliminarNotificacion(n.id)">
+                <ion-icon slot="start" name="trash-outline"></ion-icon>
+                Eliminar
+              </ion-button>
+            </div>
+          </ion-label>
+
+          <!-- FORMULARIO EDICIÓN -->
+          <div *ngIf="editandoId === n.id" class="edit-form">
+            <ion-item lines="none" class="input-item">
+              <ion-label position="stacked">Asunto</ion-label>
+              <ion-input
+                placeholder="Asunto"
+                [(ngModel)]="tituloEdit">
+              </ion-input>
+            </ion-item>
+
+            <ion-item lines="none" class="input-item">
+              <ion-label position="stacked">Fecha</ion-label>
+              <ion-input
+                type="date"
+                [(ngModel)]="fechaEdit">
+              </ion-input>
+            </ion-item>
+
+            <ion-item lines="none" class="input-item">
+              <ion-label position="stacked">Hora</ion-label>
+              <ion-input
+                type="time"
+                [(ngModel)]="horaEdit">
+              </ion-input>
+            </ion-item>
+
+            <ion-item lines="none" class="input-item mensaje-item">
+              <ion-label position="stacked">Mensaje</ion-label>
+              <ion-textarea
+                autoGrow="true"
+                placeholder="Mensaje"
+                [(ngModel)]="mensajeEdit">
+              </ion-textarea>
+            </ion-item>
+
+            <div class="edit-buttons">
+              <ion-button size="small" (click)="guardarEdicion()">
+                Guardar
+              </ion-button>
+              <ion-button size="small" fill="outline" (click)="cancelarEdicion()">
+                Cancelar
+              </ion-button>
+            </div>
+          </div>
+
+        </ion-item>
+
+        <ion-item *ngIf="notificaciones.length === 0" lines="none">
+          <ion-label class="empty-text">
+            Aún no tienes notificaciones.
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </section>
+
+  </div>
+</ion-content>

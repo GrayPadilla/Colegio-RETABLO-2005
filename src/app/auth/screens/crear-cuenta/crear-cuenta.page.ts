@@ -65,6 +65,7 @@ export class CrearCuentaPage implements OnInit {
   }
 
   goBack() {
+    (document.activeElement as HTMLElement | null)?.blur();
     this.router.navigate(['/intro']);
   }
 
@@ -89,6 +90,7 @@ export class CrearCuentaPage implements OnInit {
       });
 
       alert('Cuenta registrada con éxito');
+      (document.activeElement as HTMLElement | null)?.blur();
       this.router.navigate(['/intro']);
     } catch (error: any) {
       console.error('Error al registrar usuario:', error);

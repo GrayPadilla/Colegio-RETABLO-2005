@@ -24,6 +24,7 @@ export class CrearGooglePage implements OnInit {
   }
 
   goBack() {
+    (document.activeElement as HTMLElement | null)?.blur();
     this.router.navigate(['/intro']);
   }
   

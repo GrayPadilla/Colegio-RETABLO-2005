@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="toolbar-title">Complete los campos</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goNotificaciones()" aria-label="Notificaciones">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Fondo global -->
+<div class="background-image" aria-hidden="true"></div>
+
+<ion-content fullscreen>
+  <div class="sheet-wrapper">
+    <div class="white-sheet"></div>
+
+    <div class="content-inner">
+      <h2 class="form-title">Complete los campos</h2>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <!-- Asunto -->
+        <div class="field">
+          <label class="field-label">Asunto:</label>
+          <ion-input formControlName="asunto" placeholder="Indicar asunto"></ion-input>
+        </div>
+
+        <!-- Fecha y Hora -->
+        <div class="field-grid">
+
+          <!-- FECHA -->
+          <div class="field small">
+            <label class="field-label">Fecha:</label>
+            <input type="date" class="native-input" formControlName="fecha">
+          </div>
+
+          <!-- HORA -->
+          <div class="field small">
+            <label class="field-label">Hora:</label>
+            <input type="time" class="native-input" formControlName="hora">
+          </div>
+
+        </div>
+
+        <!-- Mensaje -->
+        <div class="field">
+          <label class="field-label">Mensaje:</label>
+          <ion-textarea formControlName="mensaje" rows="6" placeholder="(Opcional) indicar los detalles de la reunión"></ion-textarea>
+        </div>
+
+        <!-- Botón enviar -->
+        <div class="actions">
+          <button class="send-btn" type="submit">
+            Enviar <ion-icon name="send-outline"></ion-icon>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Banner publicitario -->
+      <div class="ad-wrapper">
+        <img src="../../assets/images/ImagenRestablecerContrasena.png" alt="Publicidad">
+      </div>
+      
+    </div>
+  </div>
+</ion-content>

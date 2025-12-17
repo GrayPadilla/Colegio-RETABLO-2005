@@ -1,0 +1,96 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <img src="../../assets/images/aea-pica.png" class="header-logo" alt="Logo">
+    </ion-buttons>
+    <ion-title class="header-title">Institución Educativa 2005 Retablo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="background-decoration"></div>
+
+  <div class="main-container">
+    
+    <div class="top-nav">
+      <ion-button fill="clear" (click)="goBack()" class="nav-btn">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      
+      <h1 class="page-title">Información personal</h1>
+      <ion-button fill="clear" class="nav-btn" (click)="goToNotificaciones()">
+        <ion-icon name="notifications" color="warning"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="avatar-section">
+      <div class="avatar-circle">
+        <img [src]="perfil.fotoUrl" alt="Foto perfil">
+      </div>
+      
+      <div class="upload-action" (click)="subirFoto()">
+        <div class="icon-box">
+          <ion-icon name="folder-open"></ion-icon> </div>
+        <span class="upload-text">Subir foto</span>
+      </div>
+    </div>
+
+    <div class="form-section">
+      
+      <div class="custom-input-group">
+        <label>Nombres completos</label>
+        <ion-input 
+          [(ngModel)]="perfil.nombres" 
+          placeholder="Ingrese sus nombres"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+      <div class="custom-input-group">
+        <label>Correo electrónico</label>
+        <ion-input 
+          [(ngModel)]="perfil.correo" 
+          type="email" 
+          placeholder="Ingrese su correo"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+      <div class="custom-input-group">
+        <label>Teléfono</label>
+        <ion-input 
+          [(ngModel)]="perfil.telefono" 
+          type="tel" 
+          placeholder="Ingrese su teléfono"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+      <div class="custom-input-group">
+        <label>DNI</label>
+        <ion-input 
+          [(ngModel)]="perfil.dni" 
+          type="text" 
+          placeholder="Ingrese su DNI"
+          class="no-border-input">
+        </ion-input>
+      </div>
+
+    </div>
+
+    <input 
+    type="file" 
+    id="fileInputPadre" 
+    (change)="cargarImagen($event)" 
+    accept="image/*" 
+    style="display: none;">
+
+    <div class="footer-action">
+      <ion-button expand="block" class="btn-guardar" (click)="guardarCambios()">
+        Guardar cambios
+        <ion-icon name="add-circle" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

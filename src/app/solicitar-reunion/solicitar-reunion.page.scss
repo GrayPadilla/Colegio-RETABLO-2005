@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:host {
+  --ion-font-family: 'Poppins', sans-serif;
+  --primary-blue: #2b74f0;
+}
+
+ion-content {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+
+/* Fondo global */
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../../assets/icon/fondo.png');
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+  filter: blur(0.6px) brightness(1.02);
+}
+
+/* Toolbar */
+.header-toolbar {
+  --background: var(--primary-blue);
+  color: white;
+  height: 56px;
+  z-index: 40;
+}
+.toolbar-title { color: #fff; font-size: 14px; font-weight: 600; }
+
+/* Wrapper principal */
+.sheet-wrapper {
+  position: relative;
+  max-width: 820px;
+  margin: 8px auto;
+  padding: 14px;
+  z-index: 5;
+}
+
+/* white-sheet */
+.white-sheet {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) inset;
+}
+
+/* contenido */
+.content-inner {
+  position: relative;
+  z-index: 2;
+  padding: 6px;
+  color: #12233b;
+}
+
+/* Títulos */
+.form-title {
+  text-align: center;
+  color: var(--primary-blue);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Etiquetas */
+.field-label {
+  font-size: 13px;
+  color: #2b74f0;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+/* Inputs comunes */
+ion-input, ion-textarea, .native-input {
+  --background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgba(43,116,240,0.18);
+  color: #12233b;
+  width: 100%;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+/* Nativos (input date & time) */
+.native-input {
+  appearance: none;
+  background-color: #fff;
+}
+
+/* Estilo bonito para input date y time */
+.native-input[type="date"],
+.native-input[type="time"] {
+  background: #fff;
+  border: 1px solid rgba(43,116,240,0.40);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 15px;
+  color: #12233b;
+  font-family: inherit;
+  width: 100%;
+}
+
+/* badge notificaciones */
+.notif-btn { position: relative; }
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #ff3b30;
+  color: white;
+  font-size: 11px;
+  padding: 0 4px;
+}
+
+/* Color de texto del calendario emergente en Android */
+::-webkit-calendar-picker-indicator {
+  filter: invert(33%) sepia(75%) saturate(420%) hue-rotate(200deg) brightness(95%) contrast(95%);
+  cursor: pointer;
+}
+
+/* grid */
+.field-grid {
+  display: flex;
+  gap: 10px;
+}
+.field.small { flex: 1; }
+
+/* botón enviar */
+.actions { display: flex; justify-content: center; margin-top: 8px; }
+.send-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-blue);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 15px;
+}
+
+/* Banner */
+.ad-wrapper {
+  text-align: center;
+  margin-top: 14px;
+}
+.ad-wrapper img {
+  width: 92%;
+  max-width: 520px;
+  border-radius: 10px;
+}
+
+/* responsive */
+@media (max-width: 420px) {
+  .sheet-wrapper { padding: 10px; margin: 6px; }
+  .field-grid { flex-direction: column; }
+}

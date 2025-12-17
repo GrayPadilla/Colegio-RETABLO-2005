@@ -1,67 +1,190 @@
-/* detalle-reporte.page.scss */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :host {
-  --ion-background-color: #f9fbfd;
-  background: #f9fbfd;
-  font-family: 'Poppins', sans-serif;
+  --ion-font-family: 'Poppins', sans-serif;
+  --primary-blue: #2b74f0;
+}
+
+/* === FONDO === */
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('../../assets/icon/fondo.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(0.6px) brightness(1.02);
+  pointer-events: none;
 }
 
 ion-content {
-  --background: #f9fbfd;
+  --background: transparent !important;
+  background: transparent !important;
 }
 
-ion-card {
-  border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-  background-color: #ffffff;
-  padding: 1rem;
+/* FLECHA */
+ion-buttons[slot="start"] ion-button {
+  color: white;
+}
+
+/* === HEADER NUEVO (LOGO + NOMBRE + CAMPANITA) === */
+.header-toolbar {
+  --background: var(--primary-blue);
+  color: white;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+}
+
+/* LOGO + NOMBRE (al lado de la flecha) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px; /* separación de la flecha */
+}
+
+/* Logo */
+.logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Texto del colegio */
+.school-name {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* CAMPANA */
+.notif-btn {
+  position: relative;
+  color: white;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff3b30;
+  color: white;
+  font-size: 11px;
+  border-radius: 10px;
+  padding: 2px 5px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* === CONTENEDOR Y TARJETAS === */
+.sheet-wrapper {
+  position: relative;
+  margin-top: 8px;
+  padding: 12px 14px 20px;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 5;
+}
+
+.white-sheet {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.92);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) inset;
+  pointer-events: none;
+}
+
+.content-inner {
+  position: relative;
+  z-index: 2;
+  padding: 18px 8px 28px;
+}
+
+/* Tarjeta principal */
+.report-card-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.report-card {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  background: #fff;
+  border: 1px solid rgba(43,116,240,0.06);
 }
 
 ion-card-title {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #1a237e;
+  color: #12233b;
 }
 
 ion-card-subtitle {
-  font-size: 0.95rem;
-  color: #4f4f4f;
+  font-size: 0.85rem;
+  color: #667085;
   margin-top: 4px;
 }
 
 ion-card-content p {
-  margin-bottom: 10px;
-  font-size: 0.95rem;
+  margin: 8px 0;
   color: #333;
 }
 
 ion-card-content p strong {
-  color: #1a237e;
+  color: #0b69d8;
 }
 
-ion-button {
-  margin-top: 1.5rem;
-  border-radius: 12px;
-  font-weight: 600;
+/* Botón descargar PDF */
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.create-btn {
+  background: var(--primary-blue);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 28px;
+  font-weight: 700;
   font-size: 0.95rem;
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 8px 18px rgba(43,116,240,0.25);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: 92%;
+  max-width: 420px;
+  justify-content: center;
 }
 
-ion-icon {
+/* Icono dentro del botón */
+.create-btn ion-icon {
   margin-right: 6px;
 }
 
-/* Botones organizados en grid */
-ion-grid {
-  margin-top: 2rem;
+/* Zona segura para html2canvas */
+#pdf-wrapper,
+#pdf-wrapper * {
+  filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  background-blend-mode: normal !important;
+  mix-blend-mode: normal !important;
 }
 
-/* Responsive */
-@media screen and (max-width: 480px) {
-  ion-card-title {
-    font-size: 1.2rem;
-  }
-  ion-button {
-    font-size: 0.9rem;
-  }
+/* === RESPONSIVE === */
+@media (max-width: 420px) {
+  .sheet-wrapper { padding: 10px; }
+  .report-card { border-radius: 10px; }
+  .create-btn { width: 94%; padding: 12px; }
 }

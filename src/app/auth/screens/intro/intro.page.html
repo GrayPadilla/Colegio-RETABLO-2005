@@ -41,10 +41,17 @@
         CONTINUAR CON GMAIL
       </ion-button>
 
-      <div class="word-options"><span>o</span></div>
+      <div class="word-options" *ngIf=" rol === 'padre'">
+        <span>o</span>
+      </div>
 
-      <!-- Crear cuenta -->
-      <ion-button expand="block" fill="clear" class="signup-button" (click)="goToRegister()">
+      <!-- ❗ SOLO PADRES PUEDEN VER "CREAR CUENTA" -->
+      <ion-button
+        *ngIf="rol === 'padre'"
+        expand="block"
+        fill="clear"
+        class="signup-button"
+        (click)="goToRegister()">
         <ion-icon slot="start" name="person-add-outline"></ion-icon>
         CREAR CUENTA
       </ion-button>

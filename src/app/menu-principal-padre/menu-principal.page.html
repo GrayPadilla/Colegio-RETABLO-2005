@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary" class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="header-center">
+      <img src="../../assets/images/aea-pica.png" alt="Logo Institución" class="logo" />
+      <span>Institución Educativa 2005 Retablo</span>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button class="notif-btn" (click)="goNotificaciones()">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="main-content" fullscreen>
+
+  <!-- CAPA 1: IMAGEN DE FONDO EN TODA LA PANTALLA -->
+  <div class="background-image" aria-hidden="true"></div>
+
+  <!-- CAPA 2: BLOQUE BLANCO / "SHEET" DETRÁS DE LAS TARJETAS -->
+  <div class="white-sheet" aria-hidden="true"></div>
+
+  <!-- CONTENIDO PRINCIPAL (CAPA 3: TARJETAS Y BANNER) -->
+  <div class="content-inner">
+
+    <h2 class="section-title">Menú principal</h2>
+
+    <div class="cards-area">
+      <div class="menu-grid">
+        <button class="menu-card" (click)="goToPerfil()" aria-label="Perfil">
+          <ion-icon name="person-outline" class="card-icon"></ion-icon>
+          <div class="card-text">Perfil</div>
+        </button>
+
+        <button class="menu-card" (click)="goToCalendario()" aria-label="Calendario">
+          <ion-icon name="calendar-outline" class="card-icon"></ion-icon>
+          <div class="card-text">Calendario de reuniones</div>
+        </button>
+
+        <button class="menu-card" (click)="goToReuniones()" aria-label="Reuniones">
+          <ion-icon name="people-outline" class="card-icon"></ion-icon>
+          <div class="card-text">Reuniones programadas</div>
+        </button>
+
+        <button class="menu-card" (click)="goToMensajes()" aria-label="Mensajes">
+          <ion-icon name="chatbubble-outline" class="card-icon"></ion-icon>
+          <div class="card-text">Mensajería</div>
+        </button>
+
+        <button class="menu-card" (click)="goToConfiguracion()" aria-label="Configuración">
+          <ion-icon name="settings-outline" class="card-icon"></ion-icon>
+          <div class="card-text">Configuración</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- BANNER (fuera del area blanca detrás de tarjetas) -->
+    <div class="ad-wrapper" role="region" aria-label="Publicidad">
+      <img src="../../assets/images/ImagenRestablecerContrasena.png" alt="Publicidad" />
+    </div>
+
+  </div>
+
+</ion-content>

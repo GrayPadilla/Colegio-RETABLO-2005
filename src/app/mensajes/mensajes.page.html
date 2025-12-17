@@ -1,14 +1,22 @@
 <ion-header>
   <ion-toolbar class="header-toolbar">
-    <ion-title class="header-title">Mensajes</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="header-title">
+      Mensajes
+    </ion-title>
   </ion-toolbar>
 
-  <!-- Buscador arriba -->
   <ion-toolbar class="search-toolbar">
     <ion-searchbar
-      placeholder="Buscar mensajes"
-      showCancelButton="focus"
-      debounce="300"
+      placeholder="Buscar conversaciones"
+      [value]="buscando"
+      (ionInput)="filtrarConversaciones($any($event.target).value || '')"
+      debounce="250"
       animated="true"
       class="searchbar-custom"
     ></ion-searchbar>
@@ -16,50 +24,136 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-list>
+  <!-- Fondo fijo detrás de todo -->
+  <div class="background-image" aria-hidden="true"></div>
 
-    <!-- Mensaje 1 -->
-    <ion-item class="message-item" lines="none" detail="false">
-      <ion-avatar slot="start" class="avatar">
-        <img src="../../assets/images/mamawa.jpg" />
-      </ion-avatar>
-      <ion-label class="message-text">
-        <h2 class="sender-name">Profesor Juan</h2>
-        <p class="last-message">Nos vemos mañana.</p>
-      </ion-label>
-      <ion-note slot="end" class="message-time">10:15 AM</ion-note>
-    </ion-item>
+  <div class="layout">
+    <!-- Lista de conversaciones -->
+    <div class="conversaciones-panel">
+      <!-- Botón para director: iniciar nueva conversación -->
+      <div *ngIf="rolActual === 'director'" class="nueva-conversacion-btn">
+        <ion-button expand="block" fill="outline" (click)="toggleListaPadres()">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          {{ mostrandoListaPadres ? 'Ver conversaciones' : 'Nueva conversación' }}
+        </ion-button>
+      </div>
 
-    <!-- Mensaje 2 -->
-    <ion-item class="message-item" lines="none" detail="false">
-      <ion-avatar slot="start" class="avatar">
-        <img src="../../assets/images/prosor.jpg" />
-      </ion-avatar>
-      <ion-label class="message-text">
-        <h2 class="sender-name">Padre de Ana</h2>
-        <p class="last-message">Gracias por la reunión.</p>
-      </ion-label>
-      <ion-note slot="end" class="message-time">9:30 AM</ion-note>
-    </ion-item>
+      <!-- Lista de padres disponibles (solo para director) -->
+      <div *ngIf="mostrandoListaPadres && rolActual === 'director'" class="padres-lista">
+        <h3 class="padres-lista-title">Selecciona un padre:</h3>
+        <ion-list>
+          <ion-item
+            button
+            *ngFor="let padre of padresDisponibles"
+            (click)="iniciarConversacionConPadre(padre)"
+            lines="none"
+            class="padre-item"
+          >
+            <ion-avatar slot="start" class="avatar">
+              <img src="assets/images/LogoColegio1.jpeg" alt="Padre" />
+            </ion-avatar>
+            <ion-label>
+              <h2 class="conversation-name">{{ padre.nombre }}</h2>
+              <p class="conversation-last">{{ padre.correo || 'Sin correo' }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item *ngIf="padresDisponibles.length === 0" lines="none">
+            <ion-label class="empty-text">
+              No hay padres registrados.
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
 
-    <!-- Mensaje 3 -->
-    <ion-item class="message-item" lines="none" detail="false">
-      <ion-avatar slot="start" class="avatar">
-        <img src="../../assets/images/prosorLuis.jpg" />
-      </ion-avatar>
-      <ion-label class="message-text">
-        <h2 class="sender-name">Docente Luis</h2>
-        <p class="last-message">¿Podemos reagendar?</p>
-      </ion-label>
-      <ion-note slot="end" class="message-time">Ayer</ion-note>
-    </ion-item>
+      <!-- Lista de conversaciones existentes -->
+      <ion-list *ngIf="!mostrandoListaPadres">
+        <ion-item
+          button
+          class="conversation-item"
+          *ngFor="let conv of conversacionesFiltradas"
+          (click)="seleccionarConversacion(conv)"
+          [class.conversation-item--active]="conv === conversacionSeleccionada"
+          lines="none"
+        >
+          <ion-avatar slot="start" class="avatar">
+            <img src="assets/images/LogoColegio1.jpeg" alt="Usuario" />
+          </ion-avatar>
+          <ion-label>
+            <h2 class="conversation-name">
+              {{ obtenerNombreOtro(conv) }}
+            </h2>
+            <p class="conversation-last">
+              {{ conv.ultimoMensaje || 'Inicia la conversación' }}
+            </p>
+          </ion-label>
+        </ion-item>
 
-  </ion-list>
+        <ion-item *ngIf="conversacionesFiltradas.length === 0" lines="none">
+          <ion-label class="empty-text">
+            {{ rolActual === 'director' ? 'No tienes conversaciones. Usa "Nueva conversación" para iniciar una.' : 'Aún no tienes conversaciones.' }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
 
-  <!-- Botón flotante nuevo mensaje -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" aria-label="Nuevo mensaje">
-      <ion-icon name="create-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <!-- Chat seleccionado -->
+    <div class="chat-panel" *ngIf="conversacionSeleccionada; else placeholderChat">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <img src="assets/images/LogoColegio.jpeg" alt="Usuario" class="chat-header-avatar" />
+          <div>
+            <div class="chat-header-name">
+              {{ obtenerNombreOtro(conversacionSeleccionada) }}
+            </div>
+            <div class="chat-header-role">
+              Chat institucional
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="messages-container">
+        <div
+          *ngFor="let msg of mensajes"
+          class="message-row"
+          [class.message-row--mine]="esMio(msg)"
+        >
+          <div class="message-bubble">
+            <div class="message-text">
+              {{ msg.texto }}
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="mensajes.length === 0" class="empty-messages">
+          No hay mensajes todavía. Escribe el primero.
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <ion-item lines="none" class="chat-input-item">
+          <ion-textarea
+            [(ngModel)]="nuevoMensaje"
+            autoGrow="true"
+            placeholder="Escribe un mensaje..."
+          ></ion-textarea>
+          <ion-button
+            fill="solid"
+            class="send-button"
+            (click)="enviarMensaje()"
+            [disabled]="!nuevoMensaje.trim()"
+          >
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+    </div>
+
+    <ng-template #placeholderChat>
+      <div class="chat-placeholder">
+        <img src="assets/images/Logoinstitucional.png" alt="Logo" class="placeholder-logo" />
+        <p>Selecciona una conversación para comenzar a chatear.</p>
+      </div>
+    </ng-template>
+  </div>
 </ion-content>

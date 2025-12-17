@@ -15,6 +15,6 @@ import { NuevaReunionPage } from './nueva-reunion.page';
     IonicModule,
     NuevaReunionPageRoutingModule
   ],
-  declarations: [NuevaReunionPage]
+  declarations: [NuevaReunionPage],
 })
 export class NuevaReunionPageModule {}
